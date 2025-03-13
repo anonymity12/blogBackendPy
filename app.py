@@ -7,8 +7,9 @@ import os
 import re
 import urllib
 
-from flask import (Flask, abort, flash, Markup, redirect, render_template,
+from flask import (Flask, abort, flash, redirect, render_template,
                    request, Response, session, url_for)
+from markupsafe import Markup
 from markdown import markdown
 from markdown.extensions.codehilite import CodeHiliteExtension
 from markdown.extensions.extra import ExtraExtension
@@ -238,9 +239,12 @@ def not_found(exc):
 
 
 def main():
+    print("into main")
     database.create_tables([Entry, FTSEntry], safe=True)  # 初始化数据库
-    app.run(debug=True)
+    print("db ok")
+    app.run(debug=True,port=10001)
 
 
 if __name__ == '__main__':
+    print("tt server start")
     main()
