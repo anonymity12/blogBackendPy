@@ -19,7 +19,7 @@ from peewee import *
 from playhouse.flask_utils import FlaskDB, get_object_or_404, object_list
 from playhouse.sqlite_ext import *
 
-ADMIN_PASSWORD = 'secret'
+ADMIN_PASSWORD = 'strong2025'
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'blog.db')
 DEBUG = False
@@ -197,7 +197,7 @@ def edit(slug):
         if request.form.get('title') and request.form.get('content'):
             entry.title = request.form.get('title')
             entry.content = request.form.get('content')
-            entry.publish = request.form.get('published') or False
+            entry.published = request.form.get('published') or False
             entry.save()
 
             flash('博文更新成功！', 'success')
@@ -235,14 +235,14 @@ def clean_querystring(request_args, *keys_to_remove, **new_values):
 
 @app.errorhandler(404)
 def not_found(exc):
-    return Response('<h3>Not found</h3>'), 404
+    return Response('<h3>Let go to Tibet or Taipei, but never this page, cause it is Not found as my room</h3>'), 404
 
 
 def main():
     print("into main")
     database.create_tables([Entry, FTSEntry], safe=True)  # 初始化数据库
     print("db ok")
-    app.run(debug=True,port=10001)
+    app.run(host='0.0.0.0', port=10001, debug=True)
 
 
 if __name__ == '__main__':
